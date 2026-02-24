@@ -1,0 +1,34 @@
+This is Exercise 1.12 as per https://courses.mooc.fi/org/uh-cs/courses/devops-with-docker/chapter-2/utilizing-tools-from-the-registry
+
+Dockerfile 
+
+# Start from the node image
+FROM node:16-alpine
+
+# Use /usr/src/app as the working directory
+WORKDIR /usr/src/app
+
+# Copy the project files into the container
+COPY . .
+
+# Install npm
+RUN npm install
+
+# Install npm and serve it
+RUN npm install -g serve
+
+# Build the static files
+RUN npm run build
+
+#Set the command to run the application
+CMD ["serve", "-s", "-l", "5000", "build"]
+
+
+
+
+Commands we would use to build and run the application
+# This is to build
+```docker build -t example-frontend .
+
+#This is to run
+```docker run -it -p 5000:5000 example-frontend
